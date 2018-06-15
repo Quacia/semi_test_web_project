@@ -1,0 +1,43 @@
+@charset "UTF-8";	
+html, body{
+	height: 100%; margin: 0; padding: 0;
+	background-color: #484848;
+	color: white;
+}/* 
+#container{
+	min-height: 100%;
+	position:relative;
+} */
+.navbar{
+	height: auto;
+	margin: 0;
+	background-color: white;
+	
+}
+.navbar-header>a{
+	width: 100px;
+	height: 100px;
+}
+.navbar-collapse{
+	padding-top: 50px;
+}
+.form-header{
+	padding: 20px;
+}
+
+p, label{
+	font-size:10pt;
+}
+.footer	{
+	border-radius: 4px; 
+	background: #e7e7e7; 
+	color: #484848; 
+	height: 10%;
+    width:100%;
+    padding: 20px;
+    /* bottom: 0; */
+    /* position: absolute; */
+}
+.header{
+	padding: 20px;
+}

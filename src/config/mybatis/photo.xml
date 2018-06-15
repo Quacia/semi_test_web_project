@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="photo">
+	<select id="selectList" resultMap="photoMap" parameterType="map">
+		select * from (select rownum as rnum, a.* from (select * from photo order by regdate desc) a) where rnum between #{start} and #{end}
+	</select>
+	
+	<resultMap id="photoMap" type="photo">
+		<result column="u_id" property="u_id"/>
+		<association select="guestbook.userOne" column="u_id" javaType="user" property="user"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="photo">
+		insert into photo values(seq_photo_id.nextval, #{u_id}, #{content}, #{url}, sysdate)
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from photo where id = #{value}
+	</delete>
+	
+	<select id="totalCount" parameterType="map" resultType="int">
+		select count(*) from photo
+	</select>
+</mapper>

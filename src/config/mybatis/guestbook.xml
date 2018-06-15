@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="guestbook">
+	<select id="selectList" resultMap="bookMap" parameterType="map">
+		select * from (select rownum as rnum, a.* from (select * from visit order by regdate desc) a) where rnum between #{start} and #{end}
+	</select>
+	
+	<resultMap id="bookMap" type="book">
+		<result column="u_id" property="u_id"/>
+		<association select="userOne" column="u_id" javaType="user" property="user"/>
+	</resultMap>
+	
+	<select id="userOne" parameterType="String" resultType="user">
+		select * from users where id = #{value}
+	</select>
+	
+	<insert id="insert" parameterType="book">
+		insert into visit values(seq_visit_id.nextval, #{u_id}, #{content}, systimestamp)
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from visit where id = #{value}
+	</delete>
+	
+	<select id="selectOne" parameterType="int" resultType="book">
+		select * from visit where id = #{value}
+	</select>
+	
+	<update id="update" parameterType="book">
+		update visit set content = #{content} where id = #{id}
+	</update>
+	
+	<select id="totalCount" parameterType="map" resultType="int">
+		select count(*) from visit
+	</select>
+</mapper>
